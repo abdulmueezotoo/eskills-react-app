@@ -13,7 +13,7 @@ const Content = () => {
                     This is a school management system that allows teachers to manage their classes, students to view their grades
                 </p>
                 <div className="hero-actions">
-                    <Link to="/login" className="">Login</Link>
+                    <Link to="/login" className="signup">Login</Link>
                     <a href="learnmore" className="hero-btn more">Learn More</a>
                 </div>
                 <div className="hero-image">

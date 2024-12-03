@@ -1,58 +1,30 @@
 import logo from './logo.svg';
 import { useState } from 'react';
+import React from "react";
+import Home from "./Pages/Home";
+import MovingDot from './components/MovingDot';
+import Login from './components/Login';
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 // import './App.css';
 
-const user = {
-  name: 'Benjamin',
-  imageURL: 'https://i.imgur.com/yXOvdOSs.jpg',
-  imageSize: 90
-}
-
-// Loops
-const cars = [
-  {brand: 'Toyota', id: 1},
-  {brand: 'Honda', id: 2},
-  {brand: 'Tesla', id: 3},
-  {brand: 'BMW', id: 4},
-  {brand: 'Mercedes', id: 5}
-]
-
-function BuyingCars (){
-  const listCars = cars.map(
-    car => <li key = {car.id}>
-      {car.brand}
-    </li>
-  );
-  return(
-    <ul>{listCars}</ul>
-  );
-}
-
-
-function MyButton() {
-  const [count, setCount] = useState(0);
-  function handleClick(){
-    // alert('You clicked me!');
-    setCount(count + 1);
-  }
-  return (
-    <button onClick={handleClick}>
-      Clicked {count} times
-    </button>
-  );
-}
 
 
 function App() {
+  const token = localStorage.getItem("authToken");
+  const config = {
+    headers: {Authorization: `bearer ${token}`}
+  };
+  let [position, setPosition] = React.useState({x:0, y:0})
   return (
-    <div className="App">
-      <h1>{user.name}</h1>
-      <img className="avatar" src={user.imageURL} style={{ width: user.imageSize, height: user.imageSize }}/>
-      <BuyingCars/>
-      <MyButton/>
-      <MyButton/>
-      <MyButton/>
+    <div className="App" onPointerMove={(e)=>{setPosition({x:e.clientX, y:e.clientY})}}> 
+      <Router>
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/login" element={<Login />} />
 
+        </Routes>
+      </Router>
+      <MovingDot position={position}/>
     </div>
   );
 }
